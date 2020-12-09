@@ -9,6 +9,18 @@
 		id
 		DESC
 	</select>
+	
+		<select id="getArticlesByBoardCode" resultType="Article"
+		parameterType="string">
+		SELECT A.*
+		FROM
+		article AS A
+		INNER JOIN board AS B
+		ON
+		A.boardId = B.id
+		WHERE B.code = #{boardCode}
+		ORDER BY A.id DESC
+	</select>
 
 	<select id="getArticle" resultType="Article">
 		SELECT *
