@@ -1,6 +1,7 @@
 package com.example.sbs.cuni.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,5 +32,18 @@ public class ArticleController {
 		model.addAttribute("article", article);
 
 		return "article/detail";
+	}
+	
+	@RequestMapping("article/doDelete")
+	public String doDelete(Model model, int id) {
+		Map<String, Object> rs = articleService.deleteArticle(id);
+		
+		String msg = (String)rs.get("msg");
+		String redirectUrl = "/article/list";
+		
+		model.addAttribute("alertMsg", msg);
+		model.addAttribute("locationReplace", redirectUrl);
+		
+		return "common/redirect";
 	}
 }
