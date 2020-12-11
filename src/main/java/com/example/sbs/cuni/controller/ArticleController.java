@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.sbs.cuni.dto.Article;
+import com.example.sbs.cuni.dto.Board;
 import com.example.sbs.cuni.service.ArticleService;
 
 @Controller
@@ -18,9 +19,11 @@ public class ArticleController {
 
 	@RequestMapping("article/list")
 	public String showList(Model model, String boardCode) {
+		Board board = articleService.getBoard(boardCode);
 		List<Article> articles = articleService.getArticles(boardCode);
 
 		model.addAttribute("articles", articles);
+		model.addAttribute("board", board);
 
 		return "article/list";
 	}
@@ -33,17 +36,17 @@ public class ArticleController {
 
 		return "article/detail";
 	}
-	
+
 	@RequestMapping("article/doDelete")
 	public String doDelete(Model model, int id) {
 		Map<String, Object> rs = articleService.deleteArticle(id);
-		
-		String msg = (String)rs.get("msg");
+
+		String msg = (String) rs.get("msg");
 		String redirectUrl = "/article/list";
-		
+
 		model.addAttribute("alertMsg", msg);
 		model.addAttribute("locationReplace", redirectUrl);
-		
+
 		return "common/redirect";
 	}
 }

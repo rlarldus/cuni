@@ -10,5 +10,11 @@
 
 </head>
 <body>
-	<h1 class="con">${pageName}</h1> 
+	<h1 class="con">${pageName}</h1>
+
+	<div class="meni-bar con">
+		<a href="article/list?boardCode=notice">공지사항</a> <a
+			href="article/lst?boardCode=free">자유게시판</a>
+
+	</div>
 	<main>

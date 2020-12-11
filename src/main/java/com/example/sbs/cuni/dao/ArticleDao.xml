@@ -9,16 +9,22 @@
 		id
 		DESC
 	</select>
-	
-		<select id="getArticlesByBoardCode" resultType="Article"
-		parameterType="string">
+
+	<select id="getBoardByBoardCode" resultType="Board">
+		SELECT *
+		FROM board
+		WHERE code = #{boardCode}
+	</select>
+
+	<select id="getArticlesByBoardCode" resultType="Article">
 		SELECT A.*
 		FROM
 		article AS A
 		INNER JOIN board AS B
 		ON
 		A.boardId = B.id
-		WHERE B.code = #{boardCode}
+		WHERE B.code =
+		#{boardCode}
 		ORDER BY A.id DESC
 	</select>
 
@@ -28,22 +34,11 @@
 		WHERE id
 		= #{id}
 	</select>
-	
+
 	<delete id="deleteArticle">
 		DELETE
 		FROM article
 		WHERE id
 		= #{id}
 	</delete>
-
-
-	<!-- <select id="getOne" parameterType="long" resultType="Article"> SELECT 
-		* FROM article WHERE id = #{id} </select> <select id="getTotalCount" parameterType="map" 
-		resultType="int"> SELECT COUNT(*) FROM article </select> <delete id="delete" 
-		parameterType="long"> DELETE FROM article WHERE id = #{id} </delete> <insert 
-		id="add" parameterType="map" useGeneratedKeys="true" keyProperty="id"> INSERT 
-		INTO article SET regDate = NOW(), title = #{title}, body = #{body} </insert> 
-		<update id="modify" parameterType="map"> UPDATE article SET title = #{title}, 
-		body = #{body} WHERE id = #{id} </update> <update id="hitUp" parameterType="long"> 
-		UPDATE article SET hit = hit + 1 WHERE id = #{id} </update> -->
 </mapper>
