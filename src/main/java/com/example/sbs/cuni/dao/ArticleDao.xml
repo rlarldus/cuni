@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.sbs.cuni.dao.ArticleDao">
+	<insert id="writeArticle" parameterType="map"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO article
+		SET regDate =
+		NOW(),
+		title = #{title},
+		body = #{body},
+		boardId = #{boardId}
+	</insert>
+
 	<select id="getArticles" resultType="Article">
 		SELECT *
 		FROM article
@@ -14,6 +24,13 @@
 		SELECT *
 		FROM board
 		WHERE code = #{boardCode}
+	</select>
+
+	<select id="getBoard" resultType="Board">
+		SELECT *
+		FROM board
+		WHERE id =
+		#{boardId}
 	</select>
 
 	<select id="getArticlesByBoardCode" resultType="Article">

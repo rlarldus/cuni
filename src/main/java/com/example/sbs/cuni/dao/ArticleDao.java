@@ -1,7 +1,7 @@
-  
 package com.example.sbs.cuni.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +20,8 @@ public interface ArticleDao {
 	List<Article> getArticlesByBoardCode(@Param("boardCode") String boardCode);
 
 	Board getBoardByBoardCode(@Param("boardCode") String boardCode);
+
+	void writeArticle(Map<String, Object> param);
+
+	Board getBoard(@Param("boardId") int boardId);
 }
