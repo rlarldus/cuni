@@ -24,4 +24,6 @@ public interface ArticleDao {
 	void writeArticle(Map<String, Object> param);
 
 	Board getBoard(@Param("boardId") int boardId);
+
+	void modifyArticle(Map<String, Object> param);
 }

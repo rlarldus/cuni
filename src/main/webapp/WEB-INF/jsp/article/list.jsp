@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageName" value="게시물 리스트" />
+<c:set var="pageName" value="${board.name} 게시물 리스트" />
 <%@ include file="../part/head.jspf"%>
 
 <div class="table-box con">
@@ -27,8 +27,10 @@
 					<td>${article.id}</td>
 					<td>${article.regDate}</td>
 					<td><a href="./detail?id=${article.id}">${article.title}</a></td>
-					<td><a href="./doDelete?id=${article.id}" 
-					onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a></td>
+					<td><a href="./doDelete?id=${article.id}"
+						onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a>
+						<a href="./modify?id=${article.id}">수정</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>

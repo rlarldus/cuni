@@ -19,15 +19,21 @@
 			<tr>
 				<th>날짜</th>
 				<td>${article.regDate}</td>
+			</tr>
 			<tr>
 				<th>제목</th>
 				<td>${article.title}</td>
+			</tr>
 			<tr>
 				<th>내용</th>
 				<td>${article.body}</td>
+			</tr>
 			<tr>
-				<th>번호</th>
-				<td><a href="#">삭제</a></td>
+				<th>비고</th>
+				<td><a href="./doDelete?id=${article.id}"
+					onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a>
+					<a href="./modify?id=${article.id}">수정</a></td>
+			</tr>
 		</tbody>
 	</table>
 </div>
