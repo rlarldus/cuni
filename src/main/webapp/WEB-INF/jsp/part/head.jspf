@@ -13,9 +13,16 @@
 	<h1 class="con">${pageName}</h1>
 
 	<div class="menu-bar con">
-		<a href="/article/list?boardCode=notice">공지사항</a>
-		<a href="/article/list?boardCode=free">자유게시판</a>
-		<a href="/article/write?boardCode=notice">공지사항 게시글 추가</a>
-		<a href="/article/write?boardCode=free">자유게시판 게시글 추가</a>
+				<c:if test="${loginedMemberId != null}">
+			<a href="/member/doLogout">로그아웃</a>
+		</c:if>
+		<c:if test="${loginedMemberId == null}">
+			<a href="/member/login">로그인</a>
+			<a href="/member/join">회원가입</a>
+		</c:if>
+		<a href="/article/list?boardCode=notice">공지사항</a> <a
+			href="/article/list?boardCode=free">자유게시판</a> <a
+			href="/article/write?boardCode=notice">공지사항 게시글 추가</a> <a
+			href="/article/write?boardCode=free">자유게시판 게시글 추가</a>
 	</div>
 	<main>

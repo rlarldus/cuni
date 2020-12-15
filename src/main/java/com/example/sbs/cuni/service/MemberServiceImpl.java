@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.sbs.cuni.dao.MemberDao;
-import com.example.sbs.cuni.dao.MemberDao;
 import com.example.sbs.cuni.dto.Member;
 import com.example.sbs.cuni.util.CUtil;
 
@@ -38,6 +37,11 @@ public class MemberServiceImpl implements MemberService {
 		rs.put("msg", String.format("%d번 회원이 생성되었습니다.", id));
 
 		return rs;
+	}
+
+	@Override
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
 	}
 
 }
