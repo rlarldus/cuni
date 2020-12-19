@@ -72,7 +72,35 @@ public class ArticleServiceImpl implements ArticleService {
 		Map<String, Object> rs = new HashMap<>();
 
 		rs.put("resultCode", "S-1");
-		rs.put("msg", String.format("%d번 게시물이 생성되었습니다.", id));
+		rs.put("msg", String.format("%d번 게시물이 수정되었습니다.", id));
+
+		return rs;
+	}
+
+	@Override
+	public Map<String, Object> getArticleModifyAvailable(int id, int actorMemberId) {
+		Article article = getArticle(id);
+
+		Map<String, Object> rs = new HashMap<>();
+
+		if (article.getMemberId() == actorMemberId) {
+			rs.put("resultCode", "S-1");
+			rs.put("msg", "수정권한이 있습니다.");
+		} else {
+			rs.put("resultCode", "F-1");
+			rs.put("msg", "수정권한이 없습니다.");
+		}
+
+		return rs;
+	}
+
+	@Override
+	public Map<String, Object> getArticleDeleteAvailable(int id, int actorMemberId) {
+		Map<String, Object> rs = getArticleModifyAvailable(id, actorMemberId);
+
+		String msg = (String) rs.get("msg");
+		msg = msg.replace("수정", "삭제");
+		rs.put("msg", msg);
 
 		return rs;
 	}
