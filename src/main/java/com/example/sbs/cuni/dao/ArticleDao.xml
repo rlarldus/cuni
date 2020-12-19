@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.sbs.cuni.dao.ArticleDao">
+	<update id="increaseArticleHit">
+		UPDATE article
+		SET hit = hit + 1
+		WHERE id = #{id}
+	</update>
+	
 	<update id="modifyArticle">
 		UPDATE article
 		<set>

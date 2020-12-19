@@ -26,4 +26,6 @@ public interface ArticleService {
 	Map<String, Object> getArticleModifyAvailable(int id, int actorMemberId);
 
 	Map<String, Object> getArticleDeleteAvailable(int id, int actorMemberId);
+
+	void increaseArticleHit(int id);
 }

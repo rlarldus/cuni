@@ -57,7 +57,8 @@ CREATE TABLE article (
     boardId INT(10) UNSIGNED NOT NULL,
     memberId INT(10) UNSIGNED NOT NULL,
     title CHAR(100) NOT NULL,
-    `body` CHAR(100) NOT NULL
+    `body` CHAR(100) NOT NULL,
+    hit INT(10) UNSIGNED DEFAULT 0 NOT NULL
 );
 
 INSERT INTO article
