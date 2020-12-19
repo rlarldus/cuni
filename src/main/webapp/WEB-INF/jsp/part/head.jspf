@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>커뮤니티 사이트 - ${pageName}</title>
+<title>${siteName}사이트- ${pageName}</title>
 <link rel="stylesheet" href="/resource/common.css">
 
 </head>
@@ -13,10 +13,11 @@
 	<h1 class="con">${pageName}</h1>
 
 	<div class="menu-bar con">
-				<c:if test="${loginedMemberId != null}">
+		<c:if test="${isLogined}">
+			<span>${loginedMember.name}님 환영합니다.</span>
 			<a href="/member/doLogout">로그아웃</a>
 		</c:if>
-		<c:if test="${loginedMemberId == null}">
+		<c:if test="${isLogined == false}">
 			<a href="/member/login">로그인</a>
 			<a href="/member/join">회원가입</a>
 		</c:if>
