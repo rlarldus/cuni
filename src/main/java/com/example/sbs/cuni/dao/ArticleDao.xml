@@ -7,7 +7,7 @@
 		SET hit = hit + 1
 		WHERE id = #{id}
 	</update>
-	
+
 	<update id="modifyArticle">
 		UPDATE article
 		<set>
@@ -25,7 +25,8 @@
 		title = #{title},
 		body = #{body},
 		boardId = #{boardId},
-		memberId = #{memberId}
+		memberId =
+		#{memberId}
 	</insert>
 
 	<select id="getArticles" resultType="Article">
@@ -49,23 +50,28 @@
 		#{boardId}
 	</select>
 
-	<select id="getArticlesByBoardCode" resultType="Article">
-		SELECT A.*
-		FROM
-		article AS A
+	<select id="getArticlesByBoardCode" resultMap="article">
+		SELECT A.*, M.name
+		AS extra__writer
+		FROM article AS A
 		INNER JOIN board AS B
-		ON
-		A.boardId = B.id
+		ON A.boardId =
+		B.id
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id
 		WHERE B.code =
 		#{boardCode}
 		ORDER BY A.id DESC
 	</select>
 
-	<select id="getArticle" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE id
-		= #{id}
+	<select id="getArticle" resultMap="article">
+		SELECT A.*, M.name AS
+		extra__writer
+		FROM article AS A
+		INNER JOIN member AS M
+		ON A.memberId =
+		M.id
+		WHERE A.id = #{id}
 	</select>
 
 	<delete id="deleteArticle">
@@ -74,4 +80,17 @@
 		WHERE id
 		= #{id}
 	</delete>
+
+	<resultMap type="Article" id="article">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="title" column="title" />
+		<id property="body" column="body" />
+		<id property="memberId" column="memberId" />
+		<id property="hit" column="hit" />
+		<id property="boardId" column="boardId" />
+		<association property="extra" javaType="map">
+			<id property="writer" column="extra__writer" />
+		</association>
+	</resultMap>
 </mapper>

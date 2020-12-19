@@ -10,6 +10,7 @@
 		<colgroup>
 			<col width="80">
 			<col width="180">
+			<col width="180">
 			<col width="80">
 			<col>
 			<col width="200">
@@ -18,6 +19,7 @@
 			<tr>
 				<th>번호</th>
 				<th>날짜</th>
+				<th>작성자</th>
 				<th>조회수</th>
 				<th>제목</th>
 				<th>비고</th>
@@ -28,7 +30,8 @@
 				<tr>
 					<td>${article.id}</td>
 					<td>${article.regDate}</td>
-					td>${article.hit}</td>
+					<td>${article.extra.writer}</td>
+					<td>${article.hit}</td>
 					<td><a href="./detail?id=${article.id}">${article.title}</a></td>
 					<td><a href="./doDelete?id=${article.id}"
 						onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a>
