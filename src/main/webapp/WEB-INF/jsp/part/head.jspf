@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${siteName}사이트- ${pageName}</title>
+<title>${siteName}사이트-${pageName}</title>
 <link rel="stylesheet" href="/resource/common.css">
 
 </head>

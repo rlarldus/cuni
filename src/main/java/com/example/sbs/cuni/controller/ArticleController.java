@@ -89,7 +89,10 @@ public class ArticleController {
 	}
 
 	@RequestMapping("article/doWrite")
-	public String doWrite(Model model, @RequestParam Map<String, Object> param) {
+	public String doWrite(Model model, @RequestParam Map<String, Object> param, HttpServletRequest request) {
+
+		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+		param.put("memberId", loginedMemberId);
 		Map<String, Object> rs = articleService.write(param);
 
 		int boardId = Integer.parseInt((String) param.get("boardId"));
