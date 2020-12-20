@@ -23,6 +23,10 @@
 					<td>${article.regDate}</td>
 				</tr>
 				<tr>
+					<th>작성자</th>
+					<td>${article.extra.writer}</td>
+				</tr>
+				<tr>
 					<th>제목</th>
 					<td><input type="text" name="title" placeholder="제목을 입력해주세요."
 						value="${article.title}" /></td>

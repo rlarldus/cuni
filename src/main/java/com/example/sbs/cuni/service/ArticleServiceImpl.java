@@ -109,4 +109,14 @@ public class ArticleServiceImpl implements ArticleService {
 	public void increaseArticleHit(int id) {
 		articleDao.increaseArticleHit(id);
 	}
+	
+	@Override
+	public List<Article> getForPrintArticles(String boardCode) {
+		return articleDao.getForPrintArticlesByBoardCode(boardCode);
+	}
+
+	@Override
+	public Article getForPrintArticle(int id) {
+		return articleDao.getForPrintArticle(id);
+	}
 }

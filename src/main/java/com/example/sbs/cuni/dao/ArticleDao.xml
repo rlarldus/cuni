@@ -51,20 +51,40 @@
 	</select>
 
 	<select id="getArticlesByBoardCode" resultMap="article">
-		SELECT A.*, M.name
-		AS extra__writer
-		FROM article AS A
+		SELECT A.*
+		FROM
+		article AS A
 		INNER JOIN board AS B
-		ON A.boardId =
-		B.id
-		INNER JOIN `member` AS M
-		ON A.memberId = M.id
+		ON A.boardId = B.id
 		WHERE B.code =
 		#{boardCode}
 		ORDER BY A.id DESC
 	</select>
 
+	<select id="getForPrintArticlesByBoardCode" resultMap="article">
+		SELECT
+		A.*, M.name
+		AS extra__writer
+		FROM article AS A
+		INNER JOIN board AS B
+		ON
+		A.boardId =
+		B.id
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE
+		B.code =
+		#{boardCode}
+		ORDER BY A.id DESC
+	</select>
+
 	<select id="getArticle" resultMap="article">
+		SELECT A.*
+		FROM article AS A
+		WHERE A.id = #{id}
+	</select>
+
+	<select id="getForPrintArticle" resultMap="article">
 		SELECT A.*, M.name AS
 		extra__writer
 		FROM article AS A
