@@ -81,3 +81,13 @@ boardId = 1,
 memberid = 2,
 title = '제목3',
 `body` = '내용3';
+
+# 좋아요
+CREATE TABLE `articleLike` (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY(id),
+  regDate DATETIME NOT NULL,
+  articleId INT(10) UNSIGNED NOT NULL,
+  memberId INT(10) UNSIGNED NOT NULL,
+  `point` TINYINT(1) UNSIGNED NOT NULL
+);

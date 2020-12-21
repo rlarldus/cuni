@@ -119,4 +119,44 @@ public class ArticleServiceImpl implements ArticleService {
 	public Article getForPrintArticle(int id) {
 		return articleDao.getForPrintArticle(id);
 	}
+	
+	@Override
+	public Map<String, Object> getArticleLikeAvailable(int id, int actorMemberId) {
+		Article article = getArticle(id);
+
+		Map<String, Object> rs = new HashMap<>();
+
+		if (article.getMemberId() == actorMemberId) {
+			rs.put("resultCode", "F-1");
+			rs.put("msg", "본인은 추천 할 수 없습니다.");
+
+			return rs;
+		}
+
+		int likePoint = articleDao.getLikePointByMemberId(id, actorMemberId);
+
+		if (likePoint > 0) {
+			rs.put("resultCode", "F-2");
+			rs.put("msg", "이미 좋아요를 하셨습니다.");
+
+			return rs;
+		}
+
+		rs.put("resultCode", "S-1");
+		rs.put("msg", "가능합니다.");
+
+		return rs;
+	}
+
+	@Override
+	public Map<String, Object> likeArticle(int id, int actorMemberId) {
+		articleDao.likeArticle(id, actorMemberId);
+
+		Map<String, Object> rs = new HashMap<>();
+
+		rs.put("resultCode", "S-1");
+		rs.put("msg", String.format("%d번 게시물을 추천하였습니다.", id));
+
+		return rs;
+	}
 }

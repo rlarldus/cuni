@@ -139,4 +139,28 @@ public class ArticleController {
 
 		return "common/redirect";
 	}
+	
+	@RequestMapping("article/doLike")
+	public String doDelete(Model model, int id, String redirectUrl, HttpServletRequest request) {
+
+		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+
+		Map<String, Object> articleLikeAvailableRs = articleService.getArticleLikeAvailable(id, loginedMemberId);
+
+		if (((String) articleLikeAvailableRs.get("resultCode")).startsWith("F-")) {
+			model.addAttribute("alertMsg", articleLikeAvailableRs.get("msg"));
+			model.addAttribute("historyBack", true);
+
+			return "common/redirect";
+		}
+
+		Map<String, Object> rs = articleService.likeArticle(id, loginedMemberId);
+
+		String msg = (String) rs.get("msg");
+		
+		model.addAttribute("alertMsg", msg);
+		model.addAttribute("locationReplace", redirectUrl);
+
+		return "common/redirect";
+	}
 }

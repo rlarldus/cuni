@@ -21,6 +21,7 @@
 				<th>날짜</th>
 				<th>작성자</th>
 				<th>조회수</th>
+				<th>좋아요</th>
 				<th>제목</th>
 				<th>비고</th>
 			</tr>
@@ -32,8 +33,12 @@
 					<td>${article.regDate}</td>
 					<td>${article.extra.writer}</td>
 					<td>${article.hit}</td>
+					<td>${article.extra.likePoint}</td>
 					<td><a href="./detail?id=${article.id}">${article.title}</a></td>
-					<td><a href="./doDelete?id=${article.id}"
+					<td><a
+						href="./doLike?id=${article.id}&redirectUrl=/article/list?boardCode=${board.code}"
+						onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }">좋아요</a>
+						<a href="./doDelete?id=${article.id}"
 						onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a>
 						<a href="./modify?id=${article.id}">수정</a></td>
 				</tr>
