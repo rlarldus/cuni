@@ -35,4 +35,6 @@ public interface ArticleDao {
 	int getLikePointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
 
 	void likeArticle(@Param("id") int id, @Param("memberId") int memberId);
+	
+	void cancelLikeArticle(@Param("id") int id, @Param("memberId") int memberId);
 }

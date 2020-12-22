@@ -62,15 +62,19 @@
 	</select>
 
 	<select id="getForPrintArticlesByBoardCode" resultMap="article">
-		SELECT A.*, M.name
+		SELECT
+		A.*, M.name
 		AS extra__writer,
-		IFNULL(SUM(AL.point), 0) AS extra__likePoint
+		IFNULL(SUM(AL.point), 0) AS
+		extra__likePoint
 		FROM article AS A
 		INNER JOIN board AS B
-		ON A.boardId = B.id
+		ON A.boardId =
+		B.id
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
-		LEFT JOIN articleLike AS AL
+		LEFT JOIN articleLike
+		AS AL
 		ON A.id = AL.articleId
 		WHERE B.code = #{boardCode}
 		GROUP BY A.id
@@ -85,12 +89,15 @@
 
 	<select id="getForPrintArticle" resultMap="article">
 		SELECT A.*,
-		M.name AS extra__writer,
+		M.name AS
+		extra__writer,
 		IFNULL(SUM(AL.point), 0) AS extra__likePoint
-		FROM article AS A
+		FROM article
+		AS A
 		INNER JOIN MEMBER AS M
 		ON A.memberId = M.id
-		LEFT JOIN articleLike AS AL
+		LEFT JOIN articleLike AS
+		AL
 		ON A.id = AL.articleId
 		WHERE A.id = #{id}
 		GROUP BY A.id
@@ -111,8 +118,16 @@
 		= NOW(),
 		articleId = #{id},
 		memberId = #{memberId},
-		`point` = 1
+		`point` =
+		1
 	</insert>
+
+	<delete id="cancelLikeArticle">
+		DELETE FROM articleLike
+		WHERE articleId = #{id}
+		AND
+		memberId = #{memberId}
+	</delete>
 
 	<delete id="deleteArticle">
 		DELETE

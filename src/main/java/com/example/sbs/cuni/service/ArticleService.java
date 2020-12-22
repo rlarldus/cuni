@@ -22,18 +22,22 @@ public interface ArticleService {
 	Board getBoard(int boardId);
 
 	Map<String, Object> modify(Map<String, Object> param);
-	
+
 	Map<String, Object> getArticleModifyAvailable(int id, int actorMemberId);
 
 	Map<String, Object> getArticleDeleteAvailable(int id, int actorMemberId);
 
 	void increaseArticleHit(int id);
-	
-	Article getForPrintArticle(int id);
 
-	List<Article> getForPrintArticles(String boardCode);
-	
+	Article getForPrintArticle(int id, int actorMemberId);
+
 	Map<String, Object> getArticleLikeAvailable(int id, int actorMemberId);
 
 	Map<String, Object> likeArticle(int id, int actorMemberId);
+
+	Map<String, Object> getArticleCancelLikeAvailable(int id, int actorMemberId);
+
+	Map<String, Object> cancelLikeArticle(int id, int actorMemberId);
+
+	List<Article> getForPrintArticles(String boardCode, int actorMemberId);
 }

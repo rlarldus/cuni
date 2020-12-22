@@ -35,9 +35,19 @@
 					<td>${article.hit}</td>
 					<td>${article.extra.likePoint}</td>
 					<td><a href="./detail?id=${article.id}">${article.title}</a></td>
-					<td><a
-						href="./doLike?id=${article.id}&redirectUrl=/article/list?boardCode=${board.code}"
-						onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }">좋아요</a>
+					<td>
+						<c:if test="${article.extra.loginedMemberCanLike}">
+							<a
+							href="./doLike?id=${article.id}&redirectUrl=/article/list?boardCode=${board.code}"
+							onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }">좋아요</a>
+						</c:if>
+						
+						<c:if test="${article.extra.loginedMemberCanCancelLike}">
+							<a
+							href="./doCancelLike?id=${article.id}&redirectUrl=/article/list?boardCode=${board.code}"
+							onclick="if ( confirm('추천을 취소하시겠습니까?') == false ) { return false; }">좋아요취소</a>
+						</c:if>
+						
 						<a href="./doDelete?id=${article.id}"
 						onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a>
 						<a href="./modify?id=${article.id}">수정</a></td>

@@ -36,15 +36,18 @@
 				<th>내용</th>
 				<td>${article.body}</td>
 			</tr>
-				<tr>
+			<tr>
 				<th>좋아요</th>
-				<td>
-					<span>${article.extra.likePoint}</span>
-					/
-					<a
-					href="./doLike?id=${article.id}&redirectUrl=/article/detail?id=${article.id}"
-					onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }">좋아요</a>
-				</td>
+				<td><span>${article.extra.likePoint}</span> / <c:if
+						test="${article.extra.loginedMemberCanLike}">
+						<a
+							href="./doLike?id=${article.id}&redirectUrl=/article/detail?id=${article.id}"
+							onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }">좋아요</a>
+					</c:if> <c:if test="${article.extra.loginedMemberCanCancelLike}">
+						<a
+							href="./doCancelLike?id=${article.id}&redirectUrl=/article/detail?id=${article.id}"
+							onclick="if ( confirm('추천을 취소하시겠습니까?') == false ) { return false; }">좋아요취소</a>
+					</c:if></td>
 			</tr>
 			<tr>
 				<th>비고</th>
