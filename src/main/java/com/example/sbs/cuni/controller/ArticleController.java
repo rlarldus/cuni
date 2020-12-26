@@ -1,5 +1,6 @@
 package com.example.sbs.cuni.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.sbs.cuni.dto.Article;
 import com.example.sbs.cuni.dto.Board;
@@ -164,6 +166,36 @@ public class ArticleController {
 		model.addAttribute("locationReplace", redirectUrl);
 
 		return "common/redirect";
+	}
+	
+	@RequestMapping("article/doLikeAjax")
+	@ResponseBody
+	public Map<String, Object> doLikeAjax(Model model, int id, HttpServletRequest request) {
+
+		Map<String, Object> rs = new HashMap<>();
+		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+
+		Map<String, Object> articleLikeAvailableRs = articleService.getArticleLikeAvailable(id, loginedMemberId);
+
+		if (((String) articleLikeAvailableRs.get("resultCode")).startsWith("F-")) {
+			rs.put("resultCode", articleLikeAvailableRs.get("resultCode"));
+			rs.put("msg", articleLikeAvailableRs.get("msg"));
+			
+			return rs;
+		}
+
+		Map<String, Object> likeArticleRs = articleService.likeArticle(id, loginedMemberId);
+
+		String resultCode = (String) likeArticleRs.get("resultCode");
+		String msg = (String) likeArticleRs.get("msg");
+		
+		int likePoint = articleService.getLikePoint(id);
+		
+		rs.put("resultCode", resultCode);
+		rs.put("msg", msg);
+		rs.put("likePoint", likePoint);
+
+		return rs;
 	}
 	
 	@RequestMapping("article/doCancelLike")

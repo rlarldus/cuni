@@ -5,6 +5,36 @@
 <c:set var="pageName" value="게시물 상세" />
 <%@ include file="../part/head.jspf"%>
 
+<script>
+	var id = parseInt('${article.id}');
+</script>
+
+<script>
+	function ViewArticle1__updateLikePoint(newLikePoint) {
+		$('.article--like-point').empty().append(newLikePoint);
+	}
+	function callDoLike() {
+		if (confirm('추천 하시겠습니까?') == false) {
+			return;
+		}
+		$.post(
+			'./doLikeAjax',
+			{
+				id:id
+			},
+			function(data) {
+				if ( data.msg ) {
+					alert(data.msg);
+				}
+				if ( data.resultCode.substr(0, 2) == 'S-' ) {
+					ViewArticle1__updateLikePoint(data.likePoint);
+				}
+			},
+			'json'
+		);
+	}
+</script>
+
 <div class="table-box con">
 	<table>
 		<colgroup>
@@ -38,12 +68,9 @@
 			</tr>
 			<tr>
 				<th>좋아요</th>
-				<td><span>${article.extra.likePoint}</span> / <c:if
-						test="${article.extra.loginedMemberCanLike}">
-						<a
-							href="./doLike?id=${article.id}&redirectUrl=/article/detail?id=${article.id}"
-							onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }">좋아요</a>
-					</c:if> <c:if test="${article.extra.loginedMemberCanCancelLike}">
+				<td><span class="article--like-point">${article.extra.likePoint}</span> / <a href="#"
+					onclick="callDoLike();">좋아요</a> <c:if
+						test="${article.extra.loginedMemberCanCancelLike}">
 						<a
 							href="./doCancelLike?id=${article.id}&redirectUrl=/article/detail?id=${article.id}"
 							onclick="if ( confirm('추천을 취소하시겠습니까?') == false ) { return false; }">좋아요취소</a>

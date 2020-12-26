@@ -40,4 +40,6 @@ public interface ArticleService {
 	Map<String, Object> cancelLikeArticle(int id, int actorMemberId);
 
 	List<Article> getForPrintArticles(String boardCode, int actorMemberId);
+	
+	int getLikePoint(int id);
 }

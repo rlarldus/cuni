@@ -111,6 +111,13 @@
 		AL.articleId = #{id}
 		AND AL.memberId = #{memberId}
 	</select>
+	
+	<select id="getLikePoint" resultType="int">
+		SELECT
+		IFNULL(SUM(AL.point), 0) AS `point`
+		FROM articleLike AS AL
+		WHERE AL.articleId = #{id}
+	</select>
 
 	<insert id="likeArticle" parameterType="map">
 		INSERT INTO articleLike

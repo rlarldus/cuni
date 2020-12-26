@@ -218,4 +218,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return rs;
 	}
+	
+	@Override
+	public int getLikePoint(int id) {
+		return articleDao.getLikePoint(id);
+	}
 }
