@@ -32,7 +32,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		
 		boolean isAjax = requestUri.endsWith("Ajax");
 		
-		request.setAttribute("isAjax", true);
+		request.setAttribute("isAjax", isAjax);
 
 		HttpSession session = request.getSession();
 
