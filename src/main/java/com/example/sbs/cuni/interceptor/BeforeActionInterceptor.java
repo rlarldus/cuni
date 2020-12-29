@@ -27,6 +27,12 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		String requestUri = request.getRequestURI();
+		
+		boolean isAjax = requestUri.endsWith("Ajax");
+		
+		request.setAttribute("isAjax", true);
 
 		HttpSession session = request.getSession();
 

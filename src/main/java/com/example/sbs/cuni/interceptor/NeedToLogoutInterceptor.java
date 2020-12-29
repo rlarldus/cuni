@@ -17,15 +17,22 @@ public class NeedToLogoutInterceptor implements HandlerInterceptor {
 		// 그래서 여기서 단순히 request.getAttribute("isLogined"); 이것만으로 로그인 여부 알 수 있음
 		boolean isLogined = (boolean) request.getAttribute("isLogined");
 
+		boolean isAjax = (boolean) request.getAttribute("isAjax");
+
 		if (isLogined) {
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().append("<script>");
-			response.getWriter().append("history.back();");
-			response.getWriter().append("</script>");
+			if (isAjax == false) {
+				response.setContentType("text/html; charset=UTF-8");
+				response.getWriter().append("<script>");
+				response.getWriter().append("history.back();");
+				response.getWriter().append("</script>");
+			} else {
+				response.setContentType("application/json; charset=UTF-8");
+				response.getWriter().append("{\"resultCode\":\"F-A\",\"msg\":\"로그아웃 상태에서 이용해주세요.\"}");
+			}
 			// 리턴 false;를 이후에 실행될 인터셉터와 액션이 실행되지 않음
 			return false;
 		}
 
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
-} 
+}
