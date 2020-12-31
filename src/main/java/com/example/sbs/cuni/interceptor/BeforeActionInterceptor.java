@@ -1,5 +1,10 @@
 package com.example.sbs.cuni.interceptor;
 
+import java.net.URLEncoder;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,6 +16,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.example.sbs.cuni.dto.Member;
 import com.example.sbs.cuni.service.MemberService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,11 +33,37 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
+		Map<String, Object> param = new HashMap<>();
+
+		Enumeration<String> parameterNames = request.getParameterNames();
+
+		while (parameterNames.hasMoreElements()) {
+			String paramName = parameterNames.nextElement();
+			Object paramValue = request.getParameter(paramName);
+
+			param.put(paramName, paramValue);
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+		String paramJson = mapper.writeValueAsString(param);
+
 		String requestUri = request.getRequestURI();
-		
+		String queryString = request.getQueryString();
+
+		String requesturiQueryString = requestUri;
+		if (queryString != null && queryString.length() > 0) {
+			requesturiQueryString += "?" + queryString;
+		}
+
+		String urlEncodedRequesturiQueryString = URLEncoder.encode(requesturiQueryString, "UTF-8");
+
+		request.setAttribute("requesturiQueryString", requesturiQueryString);
+		request.setAttribute("urlEncodedRequesturiQueryString", urlEncodedRequesturiQueryString);
+		request.setAttribute("param", param);
+		request.setAttribute("paramJson", paramJson);
+
 		boolean isAjax = requestUri.endsWith("Ajax");
-		
 		request.setAttribute("isAjax", isAjax);
 
 		HttpSession session = request.getSession();

@@ -38,13 +38,13 @@
 					<td>
 						<c:if test="${article.extra.loginedMemberCanLike}">
 							<a
-							href="./doLike?id=${article.id}&redirectUrl=/article/list?boardCode=${board.code}"
+							href="./doLike?id=${article.id}&redirectUrl=${urlEncodedRequesturiQueryString}"
 							onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }">좋아요</a>
 						</c:if>
 						
 						<c:if test="${article.extra.loginedMemberCanCancelLike}">
 							<a
-							href="./doCancelLike?id=${article.id}&redirectUrl=/article/list?boardCode=${board.code}"
+							href="./doCancelLike?id=${article.id}&redirectUrl=${urlEncodedRequesturiQueryString}"
 							onclick="if ( confirm('추천을 취소하시겠습니까?') == false ) { return false; }">좋아요취소</a>
 						</c:if>
 						
