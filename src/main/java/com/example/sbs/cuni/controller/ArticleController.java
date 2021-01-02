@@ -144,6 +144,22 @@ public class ArticleController {
 		return "common/redirect";
 	}
 
+	@RequestMapping("article/doWriteReply")
+	public String doWriteReply(Model model, @RequestParam Map<String, Object> param, HttpServletRequest request) {
+
+		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+		param.put("memberId", loginedMemberId);
+		Map<String, Object> rs = articleService.writeReply(param);
+
+		String msg = (String) rs.get("msg");
+		String redirectUrl = (String) param.get("redirectUrl");
+
+		model.addAttribute("alertMsg", msg);
+		model.addAttribute("locationReplace", redirectUrl);
+
+		return "common/redirect";
+	}
+
 	@RequestMapping("article/doLike")
 	public String doLike(Model model, int id, String redirectUrl, HttpServletRequest request) {
 

@@ -51,15 +51,15 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		String requestUri = request.getRequestURI();
 		String queryString = request.getQueryString();
 
-		String requesturiQueryString = requestUri;
+		String requestUriQueryString = requestUri;
 		if (queryString != null && queryString.length() > 0) {
-			requesturiQueryString += "?" + queryString;
+			requestUriQueryString += "?" + queryString;
 		}
 
-		String urlEncodedRequesturiQueryString = URLEncoder.encode(requesturiQueryString, "UTF-8");
+		String urlEncodedRequestUriQueryString = URLEncoder.encode(requestUriQueryString, "UTF-8");
 
-		request.setAttribute("requesturiQueryString", requesturiQueryString);
-		request.setAttribute("urlEncodedRequesturiQueryString", urlEncodedRequesturiQueryString);
+		request.setAttribute("requestUriQueryString", requestUriQueryString);
+		request.setAttribute("urlEncodedRequestUriQueryString", urlEncodedRequestUriQueryString);
 		request.setAttribute("param", param);
 		request.setAttribute("paramJson", paramJson);
 

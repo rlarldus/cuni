@@ -22,10 +22,20 @@ a {
 }
 
 .table-box>table td, .table-box>table th {
-	pdding: 10px;
+	padding: 10px;
 	border: 1px solid black;
 }
-/*커스텀*/
+
+.table-box>table input[type="text"], .table-box>table input[type="number"],
+	.table-box>table input[type="tel"], .table-box>table textarea {
+	width:90%;
+}
+
+.height-100px {
+	height: 100px !important;
+}
+
+/* 커스텀 */
 .con {
 	margin-left: auto;
 	margin-right: auto;

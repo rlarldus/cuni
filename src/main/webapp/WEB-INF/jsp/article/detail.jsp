@@ -94,4 +94,26 @@
 	</table>
 </div>
 
+<h2 class="con">댓글 작성</h2>
+
+<form action="./doWriteReply" method="POST">
+	<input type="hidden" name="articleId" value="${article.id}" />
+	<input type="hidden" name="redirectUrl" value="${requestUriQueryString}" />
+	<div class="table-box con">
+		<table>
+			<tbody>
+				<tr>
+					<th>내용</th>
+					<td><textarea class="height-100px" name="body" placeholder="내용을 입력해주세요."></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>작성</th>
+					<td><input type="submit" value="작성"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</form>
+
 <%@ include file="../part/foot.jspf"%>

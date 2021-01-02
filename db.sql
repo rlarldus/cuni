@@ -91,3 +91,38 @@ CREATE TABLE `articleLike` (
   memberId INT(10) UNSIGNED NOT NULL,
   `point` TINYINT(1) UNSIGNED NOT NULL
 );
+
+# 댓글 테이블 추가
+
+CREATE TABLE articleReply (
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    regDate DATETIME NOT NULL,
+    articleId INT(10) UNSIGNED NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    `body` CHAR(100) NOT NULL
+);
+
+INSERT INTO articleReply
+SET regDate = NOW(),
+memberId = 1,
+articleId = 1,
+`body` = '좋은 글 감사합니다.';
+
+INSERT INTO articleReply
+SET regDate = NOW(),
+memberId = 1,
+articleId = 1,
+`body` = '더욱 좋은 글 부탁드립니다.';
+
+INSERT INTO articleReply
+SET regDate = NOW(),
+memberId = 2,
+articleId = 1,
+`body` = '감사합니다.';
+
+INSERT INTO articleReply
+SET regDate = NOW(),
+memberId = 2,
+articleId = 3,
+`body` = '감사합니다. ^ ^';

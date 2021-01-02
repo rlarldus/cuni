@@ -42,4 +42,6 @@ public interface ArticleService {
 	List<Article> getForPrintArticles(String boardCode, int actorMemberId);
 	
 	int getLikePoint(int id);
+	
+	Map<String, Object> writeReply(Map<String, Object> param);
 }

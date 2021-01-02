@@ -122,13 +122,13 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	private void updateMoreInfoForPrint(Article article, int actorMemberId) {
-		if ( actorMemberId == 0 ) {
+		if (actorMemberId == 0) {
 			article.getExtra().put("loginedMemberCanLike", false);
 			article.getExtra().put("loginedMemberCanCancelLike", false);
-			
+
 			return;
 		}
-		
+
 		int likePoint = articleDao.getLikePointByMemberId(article.getId(), actorMemberId);
 
 		if (likePoint == 0) {
@@ -218,9 +218,21 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return rs;
 	}
-	
+
 	@Override
 	public int getLikePoint(int id) {
 		return articleDao.getLikePoint(id);
+	}
+
+	@Override
+	public Map<String, Object> writeReply(Map<String, Object> param) {
+		articleDao.writeArticleReply(param);
+		int id = CUtil.getAsInt(param.get("id"));
+		Map<String, Object> rs = new HashMap<>();
+
+		rs.put("resultCode", "S-1");
+		rs.put("msg", String.format("%d번 게시물 댓글이 생성되었습니다.", id));
+
+		return rs;
 	}
 }

@@ -29,6 +29,15 @@
 		#{memberId}
 	</insert>
 
+	<insert id="writeArticleReply" parameterType="map"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO articleReply
+		SET regDate = NOW(),
+		body = #{body},
+		articleId = #{articleId},
+		memberId = #{memberId}
+	</insert>
+	
 	<select id="getArticles" resultType="Article">
 		SELECT *
 		FROM article
