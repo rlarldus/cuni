@@ -32,12 +32,14 @@
 	<insert id="writeArticleReply" parameterType="map"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO articleReply
-		SET regDate = NOW(),
+		SET
+		regDate = NOW(),
 		body = #{body},
 		articleId = #{articleId},
-		memberId = #{memberId}
+		memberId =
+		#{memberId}
 	</insert>
-	
+
 	<select id="getArticles" resultType="Article">
 		SELECT *
 		FROM article
@@ -68,6 +70,17 @@
 		WHERE B.code =
 		#{boardCode}
 		ORDER BY A.id DESC
+	</select>
+
+	<select id="getForPrintArticleReplies" resultMap="articleReply">
+		SELECT AR.*,
+		M.name AS extra__writer
+		FROM articleReply AS AR
+		INNER JOIN `member` AS M
+		ON AR.memberId = M.id
+		WHERE AR.articleId = #{articleId}
+		ORDER BY AR.id
+		DESC
 	</select>
 
 	<select id="getForPrintArticlesByBoardCode" resultMap="article">
@@ -120,12 +133,13 @@
 		AL.articleId = #{id}
 		AND AL.memberId = #{memberId}
 	</select>
-	
+
 	<select id="getLikePoint" resultType="int">
 		SELECT
 		IFNULL(SUM(AL.point), 0) AS `point`
 		FROM articleLike AS AL
-		WHERE AL.articleId = #{id}
+		WHERE
+		AL.articleId = #{id}
 	</select>
 
 	<insert id="likeArticle" parameterType="map">
@@ -163,6 +177,17 @@
 		<association property="extra" javaType="map">
 			<id property="writer" column="extra__writer" />
 			<id property="likePoint" column="extra__likePoint" />
+		</association>
+	</resultMap>
+
+	<resultMap type="ArticleReply" id="articleReply">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="body" column="body" />
+		<id property="memberId" column="memberId" />
+		<id property="articleId" column="articleId" />
+		<association property="extra" javaType="map">
+			<id property="writer" column="extra__writer" />
 		</association>
 	</resultMap>
 </mapper>

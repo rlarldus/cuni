@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.sbs.cuni.dto.Article;
+import com.example.sbs.cuni.dto.ArticleReply;
 import com.example.sbs.cuni.dto.Board;
 
 public interface ArticleService {
@@ -40,8 +41,10 @@ public interface ArticleService {
 	Map<String, Object> cancelLikeArticle(int id, int actorMemberId);
 
 	List<Article> getForPrintArticles(String boardCode, int actorMemberId);
-	
+
 	int getLikePoint(int id);
-	
+
 	Map<String, Object> writeReply(Map<String, Object> param);
+
+	List<ArticleReply> getForPrintArticleReplies(int articleId);
 }

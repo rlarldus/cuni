@@ -94,26 +94,63 @@
 	</table>
 </div>
 
-<h2 class="con">댓글 작성</h2>
+<c:if test="${isLogined}">
+	<h2 class="con">댓글 작성</h2>
 
-<form action="./doWriteReply" method="POST">
-	<input type="hidden" name="articleId" value="${article.id}" />
-	<input type="hidden" name="redirectUrl" value="${requestUriQueryString}" />
-	<div class="table-box con">
-		<table>
-			<tbody>
+	<form action="./doWriteReply" method="POST">
+		<input type="hidden" name="articleId" value="${article.id}" /> <input
+			type="hidden" name="redirectUrl" value="${requestUriQueryString}" />
+		<div class="table-box con">
+			<table>
+				<tbody>
+					<tr>
+						<th>내용</th>
+						<td><textarea class="height-100px" name="body"
+								placeholder="내용을 입력해주세요."></textarea></td>
+					</tr>
+					<tr>
+						<th>작성</th>
+						<td><input type="submit" value="작성"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+
+</c:if>
+
+<h2 class="con">댓글 리스트</h2>
+
+<div class="table-box con">
+	<table>
+		<colgroup>
+			<col width="80">
+			<col width="180">
+			<col width="180">
+			<col>
+			<col width="200">
+		</colgroup>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>날짜</th>
+				<th>작성자</th>
+				<th>내용</th>
+				<th>비고</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${articleReplies}" var="articleReply">
 				<tr>
-					<th>내용</th>
-					<td><textarea class="height-100px" name="body" placeholder="내용을 입력해주세요."></textarea>
-					</td>
+					<td>${articleReply.id}</td>
+					<td>${articleReply.regDate}</td>
+					<td>${articleReply.extra.writer}</td>
+					<td>${articleReply.body}</td>
+					<td></td>
 				</tr>
-				<tr>
-					<th>작성</th>
-					<td><input type="submit" value="작성"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</form>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
 
 <%@ include file="../part/foot.jspf"%>
