@@ -102,6 +102,12 @@
 		GROUP BY A.id
 		ORDER BY A.id DESC
 	</select>
+	
+	<select id="getArticleReply" resultMap="articleReply">
+		SELECT AR.*
+		FROM articleReply AS AR
+		WHERE AR.id = #{id}
+	</select>
 
 	<select id="getArticle" resultMap="article">
 		SELECT A.*
@@ -164,6 +170,12 @@
 		FROM article
 		WHERE id
 		= #{id}
+	</delete>
+	
+	<delete id="deleteArticleReply">
+		DELETE
+		FROM articleReply
+		WHERE id = #{id}
 	</delete>
 
 	<resultMap type="Article" id="article">

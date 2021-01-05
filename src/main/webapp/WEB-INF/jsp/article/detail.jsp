@@ -146,7 +146,10 @@
 					<td>${articleReply.regDate}</td>
 					<td>${articleReply.extra.writer}</td>
 					<td>${articleReply.body}</td>
-					<td></td>
+					<td>
+						<a href="./doDeleteReply?id=${articleReply.id}&redirectUrl=${urlEncodedRequestUriQueryString}"
+						onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>

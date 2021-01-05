@@ -95,6 +95,31 @@ public class ArticleController {
 		return "common/redirect";
 	}
 
+	@RequestMapping("article/doDeleteReply")
+	public String doDeleteReply(Model model, int id, String redirectUrl, HttpServletRequest request) {
+
+		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+
+		Map<String, Object> articleReplyDeleteAvailableRs = articleService.getArticleReplyDeleteAvailable(id,
+				loginedMemberId);
+
+		if (((String) articleReplyDeleteAvailableRs.get("resultCode")).startsWith("F-")) {
+			model.addAttribute("alertMsg", articleReplyDeleteAvailableRs.get("msg"));
+			model.addAttribute("historyBack", true);
+
+			return "common/redirect";
+		}
+
+		Map<String, Object> rs = articleService.deleteArticleReply(id);
+
+		String msg = (String) rs.get("msg");
+
+		model.addAttribute("alertMsg", msg);
+		model.addAttribute("locationReplace", redirectUrl);
+
+		return "common/redirect";
+	}
+
 	@RequestMapping("article/doDelete")
 	public String doDelete(Model model, int id, HttpServletRequest request) {
 

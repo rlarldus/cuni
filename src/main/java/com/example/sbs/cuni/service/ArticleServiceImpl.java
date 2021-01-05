@@ -241,4 +241,37 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleReply> getForPrintArticleReplies(int articleId) {
 		return articleDao.getForPrintArticleReplies(articleId);
 	}
+
+	@Override
+	public Map<String, Object> getArticleReplyDeleteAvailable(int id, int actorMemberId) {
+		ArticleReply articleReply = getArticleReply(id);
+
+		Map<String, Object> rs = new HashMap<>();
+
+		if (articleReply.getMemberId() == actorMemberId) {
+			rs.put("resultCode", "S-1");
+			rs.put("msg", "삭제권한이 있습니다.");
+		} else {
+			rs.put("resultCode", "F-1");
+			rs.put("msg", "삭제권한이 없습니다.");
+		}
+
+		return rs;
+	}
+
+	@Override
+	public ArticleReply getArticleReply(int id) {
+		return articleDao.getArticleReply(id);
+	}
+
+	@Override
+	public Map<String, Object> deleteArticleReply(int id) {
+		articleDao.deleteArticleReply(id);
+		Map<String, Object> rs = new HashMap<>();
+
+		rs.put("resultCode", "S-1");
+		rs.put("msg", String.format("%d번 게시물 댓글이 삭제되었습니다.", id));
+
+		return rs;
+	}
 }
