@@ -17,6 +17,14 @@
 		WHERE id = #{id}
 	</update>
 
+	<update id="modifyArticleReply">
+		UPDATE articleReply
+		<set>
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 	<insert id="writeArticle" parameterType="map"
 		useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO article
@@ -102,10 +110,11 @@
 		GROUP BY A.id
 		ORDER BY A.id DESC
 	</select>
-	
+
 	<select id="getArticleReply" resultMap="articleReply">
 		SELECT AR.*
-		FROM articleReply AS AR
+		FROM
+		articleReply AS AR
 		WHERE AR.id = #{id}
 	</select>
 
@@ -113,6 +122,15 @@
 		SELECT A.*
 		FROM article AS A
 		WHERE A.id = #{id}
+	</select>
+
+	<select id="getForPrintArticleReply" resultMap="articleReply">
+		SELECT AR.*,
+		M.name AS extra__writer
+		FROM articleReply AS AR
+		INNER JOIN MEMBER AS M
+		ON AR.memberId = M.id
+		WHERE AR.id = #{id}
 	</select>
 
 	<select id="getForPrintArticle" resultMap="article">
@@ -171,7 +189,7 @@
 		WHERE id
 		= #{id}
 	</delete>
-	
+
 	<delete id="deleteArticleReply">
 		DELETE
 		FROM articleReply

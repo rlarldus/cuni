@@ -32,7 +32,11 @@ a {
 }
 
 .height-100px {
-	height: 100px !important;
+	height: 100px;
+}
+
+.height-200px {
+	height: 200px;
 }
 
 /* 커스텀 */

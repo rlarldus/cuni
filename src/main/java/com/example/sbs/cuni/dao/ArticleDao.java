@@ -49,4 +49,8 @@ public interface ArticleDao {
 	ArticleReply getArticleReply(@Param("id") int id);
 
 	void deleteArticleReply(@Param("id") int id);
+
+	ArticleReply getForPrintArticleReply(@Param("id") int id);
+
+	void modifyArticleReply(Map<String, Object> param);
 }

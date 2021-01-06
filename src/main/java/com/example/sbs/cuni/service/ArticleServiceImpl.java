@@ -274,4 +274,33 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return rs;
 	}
+
+	@Override
+	public Map<String, Object> getArticleModifyReplyAvailable(int id, int actorMemberId) {
+		Map<String, Object> rs = getArticleReplyDeleteAvailable(id, actorMemberId);
+		String msg = (String)rs.get("msg");
+		msg = msg.replace("삭제", "수정");
+		rs.put("msg", msg);
+		
+		return rs;
+	}
+
+	@Override
+	public ArticleReply getForPrintArticleReply(int id, int actorMemberId) {
+		ArticleReply articleReply = articleDao.getForPrintArticleReply(id);
+		
+		return articleReply;
+	}
+
+	@Override
+	public Map<String, Object> modifyReply(Map<String, Object> param) {
+		articleDao.modifyArticleReply(param);
+		int id = CUtil.getAsInt(param.get("id"));
+		Map<String, Object> rs = new HashMap<>();
+
+		rs.put("resultCode", "S-1");
+		rs.put("msg", String.format("%d번 게시물 댓글이 수정되었습니다.", id));
+
+		return rs;
+	}
 }
