@@ -49,12 +49,13 @@ public class ArticleController {
 
 		return "article/detail";
 	}
-	
+
 	@RequestMapping("article/modifyReply")
 	public String showModifyReply(Model model, int id, HttpServletRequest request) {
 		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
-		Map<String, Object> articleModifyReplyAvailableRs = articleService.getArticleModifyReplyAvailable(id, loginedMemberId);
+		Map<String, Object> articleModifyReplyAvailableRs = articleService.getArticleModifyReplyAvailable(id,
+				loginedMemberId);
 
 		if (((String) articleModifyReplyAvailableRs.get("resultCode")).startsWith("F-")) {
 			model.addAttribute("alertMsg", articleModifyReplyAvailableRs.get("msg"));
@@ -114,13 +115,14 @@ public class ArticleController {
 
 		return "common/redirect";
 	}
-	
+
 	@RequestMapping("article/doModifyReply")
 	public String doModifyReply(Model model, @RequestParam Map<String, Object> param, HttpServletRequest request) {
 		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 		int id = Integer.parseInt((String) param.get("id"));
-		Map<String, Object> articleModifyReplyAvailableRs = articleService.getArticleModifyReplyAvailable(id, loginedMemberId);
+		Map<String, Object> articleModifyReplyAvailableRs = articleService.getArticleModifyReplyAvailable(id,
+				loginedMemberId);
 
 		if (((String) articleModifyReplyAvailableRs.get("resultCode")).startsWith("F-")) {
 			model.addAttribute("alertMsg", articleModifyReplyAvailableRs.get("msg"));
@@ -233,6 +235,17 @@ public class ArticleController {
 		model.addAttribute("locationReplace", redirectUrl);
 
 		return "common/redirect";
+	}
+
+	@RequestMapping("article/doWriteReplyAjax")
+	@ResponseBody
+	public Map<String, Object> doWriteReplyAjax(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+
+		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+		param.put("memberId", loginedMemberId);
+		Map<String, Object> rs = articleService.writeReply(param);
+
+		return rs;
 	}
 
 	@RequestMapping("article/doLike")

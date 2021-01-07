@@ -97,9 +97,30 @@
 <c:if test="${isLogined}">
 	<h2 class="con">댓글 작성</h2>
 
-	<form action="./doWriteReply" method="POST">
-		<input type="hidden" name="articleId" value="${article.id}" /> <input
-			type="hidden" name="redirectUrl" value="${requestUriQueryString}" />
+	<script>
+		function WriteReply__submitForm(form) {
+			form.body.value = form.body.value.trim();
+			if (form.body.value.length == 0) {
+				alert('댓글을 입력해주세요.');
+				form.body.focus();
+				return;
+			}
+			$.post('./doWriteReplyAjax', {
+				articleId : param.id,
+				body : form.body.value
+			}, function(data) {
+				if (data.msg) {
+					alert(data.msg);
+				}
+				if ( data.resultCode.substr(0, 2) == 'S-' ) {
+					location.reload(); // 임시
+				}
+			}, 'json');
+			form.body.value = '';
+		}
+	</script>
+
+	<form action="" onsubmit="WriteReply__submitForm(this); return false;">
 		<div class="table-box con">
 			<table>
 				<tbody>
