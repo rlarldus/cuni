@@ -98,7 +98,7 @@
 	<h2 class="con">댓글 작성</h2>
 
 	<script>
-		function WriteReply__submitForm(form) {
+		function ArticleReply__submitWriteForm(form) {
 			form.body.value = form.body.value.trim();
 			if (form.body.value.length == 0) {
 				alert('댓글을 입력해주세요.');
@@ -112,7 +112,7 @@
 				if (data.msg) {
 					alert(data.msg);
 				}
-				if ( data.resultCode.substr(0, 2) == 'S-' ) {
+				if (data.resultCode.substr(0, 2) == 'S-') {
 					location.reload(); // 임시
 				}
 			}, 'json');
@@ -120,7 +120,8 @@
 		}
 	</script>
 
-	<form action="" onsubmit="WriteReply__submitForm(this); return false;">
+	<form action=""
+		onsubmit="ArticleReply__submitWriteForm(this); return false;">
 		<div class="table-box con">
 			<table>
 				<tbody>
@@ -142,7 +143,40 @@
 
 <h2 class="con">댓글 리스트</h2>
 
-<div class="table-box con">
+<script>
+	function ArticleReply__loadList() {
+		$.get('./getForPrintArticleRepliesRs', {
+			id : param.id
+		}, function(data) {
+			for (var i = 0; i < data.articleReplies.length; i++) {
+				var articleReply = data.articleReplies[i];
+				ArticleReply__drawReply(articleReply);
+			}
+		}, 'json');
+	}
+	var ArticleReply__$listTbody;
+	function ArticleReply__drawReply(articleReply) {
+		var html = '';
+		html = '<tr data-article-reply-id="' + articleReply.id + '">';
+		html += '<td>' + articleReply.id + '</td>';
+		html += '<td>' + articleReply.regDate + '</td>';
+		html += '<td>' + articleReply.extra.writer + '</td>';
+		html += '<td>' + articleReply.body + '</td>';
+		html += '<td>';
+		html += '<a href="#">삭제</a>';
+		html += '<a href="#">수정</a>';
+		html += '</td>';
+		html += '</tr>';
+		ArticleReply__$listTbody.prepend(html);
+	}
+	$(function() {
+		ArticleReply__$listTbody = $('.article-reply-list-box > table tbody');
+		ArticleReply__loadList();
+		//setInterval(ArticleReply__loadList, 1000);
+	});
+</script>
+
+<div class="article-reply-list-box table-box con">
 	<table>
 		<colgroup>
 			<col width="80">
@@ -161,21 +195,20 @@
 			</tr>
 		</thead>
 		<tbody>
+			<%--
 			<c:forEach items="${articleReplies}" var="articleReply">
 				<tr>
 					<td>${articleReply.id}</td>
 					<td>${articleReply.regDate}</td>
 					<td>${articleReply.extra.writer}</td>
 					<td>${articleReply.body}</td>
-					<td><a
-						href="./doDeleteReply?id=${articleReply.id}&redirectUrl=${urlEncodedRequestUriQueryString}"
-						onclick="if ( confirm('삭제하시겠습니까?') == false ) { return false; }">삭제</a>
-
-						<a
-						href="./modifyReply?id=${articleReply.id}&redirectUrl=${urlEncodedRequestUriQueryString}">수정</a>
+					<td>
+						<a href="#" >삭제</a>
+						<a href="#">수정</a>
 					</td>
 				</tr>
-			</c:forEach>
+			</c:forEach> 
+			--%>
 		</tbody>
 	</table>
 </div>

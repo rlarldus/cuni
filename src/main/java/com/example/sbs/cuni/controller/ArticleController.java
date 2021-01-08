@@ -23,6 +23,19 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 
+	@RequestMapping("article/getForPrintArticleRepliesRs")
+	@ResponseBody
+	public Map<String, Object> getForPrintArticleRepliesRs(int id) {
+		List<ArticleReply> articleReplies = articleService.getForPrintArticleReplies(id);
+
+		Map<String, Object> rs = new HashMap<>();
+		rs.put("resultCode", "S-1");
+		rs.put("msg", String.format("총 %d개의 댓글이 있습니다.", articleReplies.size()));
+		rs.put("articleReplies", articleReplies);
+
+		return rs;
+	}
+
 	@RequestMapping("article/list")
 	public String showList(Model model, String boardCode, HttpServletRequest request) {
 		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
