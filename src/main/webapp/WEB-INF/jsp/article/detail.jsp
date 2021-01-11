@@ -109,12 +109,7 @@
 				articleId : param.id,
 				body : form.body.value
 			}, function(data) {
-				if (data.msg) {
-					alert(data.msg);
-				}
-				if (data.resultCode.substr(0, 2) == 'S-') {
-					location.reload(); // 임시
-				}
+				
 			}, 'json');
 			form.body.value = '';
 		}
@@ -144,13 +139,18 @@
 <h2 class="con">댓글 리스트</h2>
 
 <script>
+	var ArticleReply__lastLoadedArticleReplyId = 0;
 	function ArticleReply__loadList() {
 		$.get('./getForPrintArticleRepliesRs', {
-			id : param.id
+			id : param.id,
+			from : ArticleReply__lastLoadedArticleReplyId + 1
 		}, function(data) {
+			data.articleReplies = data.articleReplies.reverse();
+			
 			for (var i = 0; i < data.articleReplies.length; i++) {
 				var articleReply = data.articleReplies[i];
 				ArticleReply__drawReply(articleReply);
+				ArticleReply__lastLoadedArticleReplyId = articleReply.id;
 			}
 		}, 'json');
 	}
@@ -171,8 +171,7 @@
 	}
 	$(function() {
 		ArticleReply__$listTbody = $('.article-reply-list-box > table tbody');
-		ArticleReply__loadList();
-		//setInterval(ArticleReply__loadList, 1000);
+		setInterval(ArticleReply__loadList, 1000);
 	});
 </script>
 

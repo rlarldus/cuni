@@ -25,8 +25,8 @@ public class ArticleController {
 
 	@RequestMapping("article/getForPrintArticleRepliesRs")
 	@ResponseBody
-	public Map<String, Object> getForPrintArticleRepliesRs(int id) {
-		List<ArticleReply> articleReplies = articleService.getForPrintArticleReplies(id);
+	public Map<String, Object> getForPrintArticleRepliesRs(int id, int from) {
+		List<ArticleReply> articleReplies = articleService.getForPrintArticleReplies(id, from);
 
 		Map<String, Object> rs = new HashMap<>();
 		rs.put("resultCode", "S-1");

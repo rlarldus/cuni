@@ -303,4 +303,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return rs;
 	}
+
+	@Override
+	public List<ArticleReply> getForPrintArticleReplies(int articleId, int from) {
+		return articleDao.getForPrintArticleRepliesFrom(articleId, from);
+	}
 }
