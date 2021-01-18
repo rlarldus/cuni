@@ -109,7 +109,6 @@
 				articleId : param.id,
 				body : form.body.value
 			}, function(data) {
-				
 			}, 'json');
 			form.body.value = '';
 		}
@@ -146,16 +145,22 @@
 			from : ArticleReply__lastLoadedArticleReplyId + 1
 		}, function(data) {
 			data.articleReplies = data.articleReplies.reverse();
-			
 			for (var i = 0; i < data.articleReplies.length; i++) {
 				var articleReply = data.articleReplies[i];
 				ArticleReply__drawReply(articleReply);
 				ArticleReply__lastLoadedArticleReplyId = articleReply.id;
 			}
+			setTimeout(ArticleReply__loadList, 1000);
 		}, 'json');
 	}
 	var ArticleReply__$listTbody;
 	function ArticleReply__drawReply(articleReply) {
+		var html = $('.template-box-1 tbody').html();
+		html = replaceAll(html, "{$번호}", articleReply.id);
+		html = replaceAll(html, "{$날짜}", articleReply.regDate);
+		html = replaceAll(html, "{$작성자}", articleReply.extra.writer);
+		html = replaceAll(html, "{$내용}", articleReply.body);
+		/*
 		var html = '';
 		html = '<tr data-article-reply-id="' + articleReply.id + '">';
 		html += '<td>' + articleReply.id + '</td>';
@@ -167,13 +172,34 @@
 		html += '<a href="#">수정</a>';
 		html += '</td>';
 		html += '</tr>';
+		 */
 		ArticleReply__$listTbody.prepend(html);
 	}
 	$(function() {
 		ArticleReply__$listTbody = $('.article-reply-list-box > table tbody');
-		setInterval(ArticleReply__loadList, 1000);
+		ArticleReply__loadList();
 	});
+	function ArticleReply__delete(obj) {
+		alert(obj);
+	}
 </script>
+
+<div class="template-box template-box-1">
+	<table border="1">
+		<tbody>
+			<tr data-article-reply-id="{$번호}">
+				<td>{$번호}</td>
+				<td>{$날짜}</td>
+				<td>{$작성자}</td>
+				<td>{$내용}</td>
+				<td><a href="#"
+					onclick="if ( confirm('정말 삭제하시겠습니까?') ) { ArticleReply__delete(this); } return false;">삭제</a>
+					<a href="#" onclick="return false;">수정</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
 
 <div class="article-reply-list-box table-box con">
 	<table>

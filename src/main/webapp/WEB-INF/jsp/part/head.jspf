@@ -10,6 +10,7 @@
 
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="/resource/common.js"></script>
 
 <script>
 var param = ${paramJson};
