@@ -155,6 +155,30 @@ public class ArticleController {
 		return "common/redirect";
 	}
 
+	@RequestMapping("article/doModifyReplyAjax")
+	@ResponseBody
+	public Map<String, Object> doModifyReplyAjax(@RequestParam Map<String, Object> param, HttpServletRequest request) {
+		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+
+		int id = Integer.parseInt((String) param.get("id"));
+		Map<String, Object> articleModifyReplyAvailableRs = articleService.getArticleModifyReplyAvailable(id,
+				loginedMemberId);
+
+		if (((String) articleModifyReplyAvailableRs.get("resultCode")).startsWith("F-")) {
+			return articleModifyReplyAvailableRs;
+		}
+
+		Map<String, Object> rs = articleService.modifyReply(param);
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		return rs;
+	}
+
 	@RequestMapping("article/doDeleteReply")
 	public String doDeleteReply(Model model, int id, String redirectUrl, HttpServletRequest request) {
 
@@ -179,7 +203,7 @@ public class ArticleController {
 
 		return "common/redirect";
 	}
-	
+
 	@RequestMapping("article/doDeleteReplyAjax")
 	@ResponseBody
 	public Map<String, Object> doDeleteReply(int id, String redirectUrl, HttpServletRequest request) {
@@ -194,15 +218,12 @@ public class ArticleController {
 		}
 
 		Map<String, Object> rs = articleService.deleteArticleReply(id);
-		
+
 		/*
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		*/
-		
+		 * try { Thread.sleep(3000); } catch (InterruptedException e) {
+		 * e.printStackTrace(); }
+		 */
+
 		return rs;
 	}
 
