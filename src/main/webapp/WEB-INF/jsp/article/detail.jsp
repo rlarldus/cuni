@@ -1,4 +1,3 @@
-  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -177,7 +176,8 @@
 	function ArticleReply__loadList() {
 		$.get('./getForPrintArticleRepliesRs', {
 			id : param.id,
-			from : ArticleReply__lastLoadedArticleReplyId + 1
+			from : ArticleReply__lastLoadedArticleReplyId + 1,
+			ajax : 'Y'
 		}, function(data) {
 			data.articleReplies = data.articleReplies.reverse();
 			for (var i = 0; i < data.articleReplies.length; i++) {

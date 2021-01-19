@@ -64,6 +64,13 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		request.setAttribute("paramJson", paramJson);
 
 		boolean isAjax = requestUri.endsWith("Ajax");
+		
+		if ( isAjax == false ) {
+			if ( param.containsKey("ajax") && param.get("ajax").equals("Y") ) {
+				isAjax = true;
+			}
+		}
+		
 		request.setAttribute("isAjax", isAjax);
 
 		HttpSession session = request.getSession();

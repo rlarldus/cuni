@@ -28,13 +28,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// beforeActionInterceptor 를 모든 액션(/**)에 연결합니다. 단 /resource 로 시작하는 액션은 제외
-		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**");
+		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**");
 
 		// 메인, 로그인, 로그인 처리, 가입, 가입 처리, 게시물 리스트, 게시물 상세 빼고는 모두 로그인 상태여야 접근이 가능하다.
 		registry.addInterceptor(needToLoginInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**")
 				.excludePathPatterns("/").excludePathPatterns("/member/login").excludePathPatterns("/member/doLogin")
 				.excludePathPatterns("/member/join").excludePathPatterns("/member/doJoin")
-				.excludePathPatterns("/article/list").excludePathPatterns("/article/detail")
+				.excludePathPatterns("/article/list").excludePathPatterns("/article/detail").excludePathPatterns("/article/getForPrintArticleRepliesRs")
 				.excludePathPatterns("/home/**");
 
 		// 로그인, 로그인처리, 가입, 가입 처리는 로그인 상태일 때 접근할 수 없다.
