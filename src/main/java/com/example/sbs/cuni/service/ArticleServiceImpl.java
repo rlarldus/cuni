@@ -113,13 +113,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public List<Article> getForPrintArticles(String boardCode, int actorMemberId) {
-		List<Article> articles = articleDao.getForPrintArticlesByBoardCode(boardCode);
-
-		for (Article article : articles) {
-			updateMoreInfoForPrint(article, actorMemberId);
-		}
-
-		return articles;
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("boardCode", boardCode);
+		param.put("actorMemberId", actorMemberId);
+		return getForPrintArticlesByParam(param);
 	}
 
 	private void updateMoreInfoForPrint(Article article, int actorMemberId) {
@@ -307,5 +304,22 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<ArticleReply> getForPrintArticleReplies(int articleId, int from) {
 		return articleDao.getForPrintArticleRepliesFrom(articleId, from);
+	}
+
+	@Override
+	public List<Article> getForPrintArticlesByParam(Map<String, Object> param) {
+		int actorMemberId = 0;
+		
+		if ( param.containsKey("actorMemberId") ) {
+			actorMemberId = (int)param.get("actorMemberId");
+		}
+		
+		List<Article> articles = articleDao.getForPrintArticles(param);
+
+		for (Article article : articles) {
+			updateMoreInfoForPrint(article, actorMemberId);
+		}
+
+		return articles;
 	}
 }

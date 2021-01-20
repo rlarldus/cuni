@@ -40,7 +40,12 @@ public class ArticleController {
 	public String showList(Model model, String boardCode, HttpServletRequest request) {
 		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		Board board = articleService.getBoard(boardCode);
-		List<Article> articles = articleService.getForPrintArticles(boardCode, loginedMemberId);
+		
+		Map<String, Object> getForPrintArticlesByParam = new HashMap();
+		getForPrintArticlesByParam.put("boardCode", boardCode);
+		getForPrintArticlesByParam.put("actorMemberId", loginedMemberId);
+		getForPrintArticlesByParam.put("limitCount", 5);
+		List<Article> articles = articleService.getForPrintArticlesByParam(getForPrintArticlesByParam);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);

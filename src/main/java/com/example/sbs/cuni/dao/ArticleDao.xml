@@ -102,8 +102,8 @@
 		ORDER BY AR.id
 		DESC
 	</select>
-
-	<select id="getForPrintArticlesByBoardCode" resultMap="article">
+	
+	<select id="getForPrintArticles" resultMap="article">
 		SELECT
 		A.*, M.name
 		AS extra__writer,
@@ -121,6 +121,9 @@
 		WHERE B.code = #{boardCode}
 		GROUP BY A.id
 		ORDER BY A.id DESC
+		<if test="limitCount != null">
+			LIMIT 0, #{limitCount}
+		</if>
 	</select>
 
 	<select id="getArticleReply" resultMap="articleReply">

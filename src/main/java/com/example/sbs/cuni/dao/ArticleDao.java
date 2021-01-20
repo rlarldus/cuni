@@ -32,8 +32,6 @@ public interface ArticleDao {
 
 	Article getForPrintArticle(int id);
 
-	List<Article> getForPrintArticlesByBoardCode(String boardCode);
-
 	int getLikePointByMemberId(@Param("id") int id, @Param("memberId") int memberId);
 
 	void likeArticle(@Param("id") int id, @Param("memberId") int memberId);
@@ -55,4 +53,6 @@ public interface ArticleDao {
 	void modifyArticleReply(Map<String, Object> param);
 
 	List<ArticleReply> getForPrintArticleRepliesFrom(@Param("articleId") int articleId, @Param("from") int from);
+
+	List<Article> getForPrintArticles(Map<String, Object> param);
 }
