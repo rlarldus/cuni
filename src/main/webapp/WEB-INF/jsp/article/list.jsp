@@ -5,7 +5,19 @@
 <c:set var="pageName" value="${board.name} 게시물 리스트" />
 <%@ include file="../part/head.jspf"%>
 
-<div class="table-box con">
+<div class="con margin-top-30">
+	<span>
+		<span>총 게시물 수 : </span>
+		<span>${totalCount}</span>
+	</span>
+	<span>/</span>
+	<span>
+		<span>현재 페이지 : </span>
+		<span style="color:red;">${param.page}</span>
+	</span>
+</div>
+
+<div class="table-box margin-top-30 con">
 	<table>
 		<colgroup>
 			<col width="80">
@@ -55,6 +67,26 @@
 			</c:forEach>
 		</tbody>
 	</table>
+</div>
+
+<!-- URL 초기값 -->
+<c:url var="pageUrl" value="">
+	<c:forEach items="${param}" var="entry">
+		<c:if test="${entry.key != 'page'}">
+			<c:param name="${entry.key}" value="${entry.value}" />
+		</c:if>
+	</c:forEach>
+</c:url>
+
+<div class="page-menu text-align-center margin-top-30">
+	<c:forEach begin="1" end="${totalPage}" var="currentPage">
+		<c:if test="${currentPage == param.page}">
+			<a style="color:red; font-weight:bold;" href="${pageUrl}&page=${currentPage}">${currentPage}</a>
+		</c:if>
+		<c:if test="${currentPage != param.page}">
+			<a href="${pageUrl}&page=${currentPage}">${currentPage}</a>
+		</c:if>
+	</c:forEach>
 </div>
 
 <%@ include file="../part/foot.jspf"%>

@@ -37,18 +37,30 @@ public class ArticleController {
 	}
 
 	@RequestMapping("article/list")
-	public String showList(Model model, String boardCode, HttpServletRequest request) {
+	public String showList(Model model, String boardCode, @RequestParam(value = "page", defaultValue = "1") int page,
+			HttpServletRequest request) {
 		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		Board board = articleService.getBoard(boardCode);
-		
+
 		Map<String, Object> getForPrintArticlesByParam = new HashMap();
 		getForPrintArticlesByParam.put("boardCode", boardCode);
 		getForPrintArticlesByParam.put("actorMemberId", loginedMemberId);
-		getForPrintArticlesByParam.put("limitCount", 5);
+
+		int pageItemsCount = 30;
+
+		int limitCount = pageItemsCount;
+		int limitFrom = (page - 1) * pageItemsCount;
+		getForPrintArticlesByParam.put("limitCount", limitCount);
+		getForPrintArticlesByParam.put("limitFrom", limitFrom);
+		int totalCount = articleService.getArticlesCount(getForPrintArticlesByParam);
+		int totalPage = (int)Math.ceil((double)totalCount / pageItemsCount);
 		List<Article> articles = articleService.getForPrintArticlesByParam(getForPrintArticlesByParam);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
+		
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("totalPage", totalPage);
 
 		return "article/list";
 	}

@@ -103,6 +103,14 @@
 		DESC
 	</select>
 	
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS A
+		INNER JOIN board AS B
+		ON A.boardId = B.id
+		WHERE B.code = #{boardCode}
+	</select>
+	
 	<select id="getForPrintArticles" resultMap="article">
 		SELECT
 		A.*, M.name
@@ -122,7 +130,7 @@
 		GROUP BY A.id
 		ORDER BY A.id DESC
 		<if test="limitCount != null">
-			LIMIT 0, #{limitCount}
+			LIMIT #{limitFrom}, #{limitCount}
 		</if>
 	</select>
 

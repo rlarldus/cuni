@@ -39,11 +39,19 @@ a {
 	height: 200px;
 }
 
+.margin-top-30 {
+	margin-top:30px;
+}
+
+.text-align-center {
+	text-align:center;
+}
+
 /* 커스텀 */
 .con {
 	margin-left: auto;
 	margin-right: auto;
-	}
+}
 
 .template-box {
 	display:none;

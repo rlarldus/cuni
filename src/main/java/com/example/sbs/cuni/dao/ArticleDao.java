@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
 
 import com.example.sbs.cuni.dto.Article;
 import com.example.sbs.cuni.dto.ArticleReply;
@@ -55,4 +56,6 @@ public interface ArticleDao {
 	List<ArticleReply> getForPrintArticleRepliesFrom(@Param("articleId") int articleId, @Param("from") int from);
 
 	List<Article> getForPrintArticles(Map<String, Object> param);
+
+	int getArticlesCount(Map<String, Object> param);
 }

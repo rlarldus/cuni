@@ -322,4 +322,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return articles;
 	}
+
+	@Override
+	public int getArticlesCount(Map<String, Object> param) {
+		return articleDao.getArticlesCount(param);
+	}
 }

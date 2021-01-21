@@ -63,4 +63,6 @@ public interface ArticleService {
 	List<ArticleReply> getForPrintArticleReplies(int articleId, int from);
 
 	List<Article> getForPrintArticlesByParam(Map<String, Object> param);
+
+	int getArticlesCount(Map<String, Object> param);
 }
