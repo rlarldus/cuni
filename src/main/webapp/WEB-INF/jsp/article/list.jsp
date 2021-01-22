@@ -79,14 +79,34 @@
 </c:url>
 
 <div class="page-menu text-align-center margin-top-30">
-	<c:forEach begin="1" end="${totalPage}" var="currentPage">
+	<c:if test="${needToShowPageBtnToFirst}">
+		<a title="1 페이지로 이동합니다." href="${pageUrl}&page=1">
+			<i class="fas fa-angle-double-left"></i>
+		</a>
+	</c:if>
+	<c:if test="${beforeMorePages}">
+		<a title="${param.page - pageBoundSize - 1} 페이지로 이동합니다." href="${pageUrl}&page=${param.page - pageBoundSize - 1}">
+			<i class="fas fa-angle-left"></i>
+		</a>
+	</c:if>
+	<c:forEach begin="${pageStartsWith}" end="${pageEndsWith}" var="currentPage">
 		<c:if test="${currentPage == param.page}">
-			<a style="color:red; font-weight:bold;" href="${pageUrl}&page=${currentPage}">${currentPage}</a>
+			<a title="${currentPage} 페이지로 이동합니다." style="color:red; font-weight:bold;" href="${pageUrl}&page=${currentPage}">${currentPage}</a>
 		</c:if>
 		<c:if test="${currentPage != param.page}">
-			<a href="${pageUrl}&page=${currentPage}">${currentPage}</a>
+			<a title="${currentPage} 페이지로 이동합니다." href="${pageUrl}&page=${currentPage}">${currentPage}</a>
 		</c:if>
 	</c:forEach>
+	<c:if test="${afterMorePages}">
+		<a title="${param.page + pageBoundSize + 1} 페이지로 이동합니다." href="${pageUrl}&page=${param.page + pageBoundSize + 1}">
+			<i class="fas fa-angle-right"></i>
+		</a>
+	</c:if>
+	<c:if test="${needToShowPageBtnToLast}">
+		<a title="${totalPage} 페이지로 이동합니다." href="${pageUrl}&page=${totalPage}">
+			<i class="fas fa-angle-double-right"></i>
+		</a>
+	</c:if>
 </div>
 
 <%@ include file="../part/foot.jspf"%>

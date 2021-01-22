@@ -53,14 +53,38 @@ public class ArticleController {
 		getForPrintArticlesByParam.put("limitCount", limitCount);
 		getForPrintArticlesByParam.put("limitFrom", limitFrom);
 		int totalCount = articleService.getArticlesCount(getForPrintArticlesByParam);
-		int totalPage = (int)Math.ceil((double)totalCount / pageItemsCount);
+		int totalPage = (int) Math.ceil((double) totalCount / pageItemsCount);
 		List<Article> articles = articleService.getForPrintArticlesByParam(getForPrintArticlesByParam);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
-		
+
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("totalPage", totalPage);
+
+		int pageBoundSize = 5;
+		int pageStartsWith = page - pageBoundSize;
+		if (pageStartsWith < 1) {
+			pageStartsWith = 1;
+		}
+		int pageEndsWith = page + pageBoundSize;
+		if (pageEndsWith > totalPage) {
+			pageEndsWith = totalPage;
+		}
+
+		model.addAttribute("pageStartsWith", pageStartsWith);
+		model.addAttribute("pageEndsWith", pageEndsWith);
+		
+		boolean beforeMorePages = pageStartsWith > 1;
+		boolean afterMorePages = pageEndsWith < totalPage;
+		
+		model.addAttribute("beforeMorePages", beforeMorePages);
+		model.addAttribute("afterMorePages", afterMorePages);
+		model.addAttribute("pageBoundSize", pageBoundSize);
+		
+		model.addAttribute("needToShowPageBtnToFirst", page != 1);
+		model.addAttribute("needToShowPageBtnToLast", page != totalPage);
+		
 
 		return "article/list";
 	}
