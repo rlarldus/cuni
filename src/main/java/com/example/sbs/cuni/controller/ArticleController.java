@@ -37,14 +37,24 @@ public class ArticleController {
 	}
 
 	@RequestMapping("article/list")
-	public String showList(Model model, String boardCode, @RequestParam(value = "page", defaultValue = "1") int page,
-			HttpServletRequest request) {
+	public String showList(Model model, String boardCode, String searchKeyword, String searchType,
+			@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request) {
 		int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		Board board = articleService.getBoard(boardCode);
+		
+		if ( searchType != null ) {
+			searchType = searchType.trim();
+		}
+		
+		if ( searchKeyword != null ) {
+			searchKeyword = searchKeyword.trim();
+		}
 
 		Map<String, Object> getForPrintArticlesByParam = new HashMap();
 		getForPrintArticlesByParam.put("boardCode", boardCode);
 		getForPrintArticlesByParam.put("actorMemberId", loginedMemberId);
+		getForPrintArticlesByParam.put("searchKeyword", searchKeyword);
+		getForPrintArticlesByParam.put("searchType", searchType);
 
 		int pageItemsCount = 30;
 
@@ -74,17 +84,16 @@ public class ArticleController {
 
 		model.addAttribute("pageStartsWith", pageStartsWith);
 		model.addAttribute("pageEndsWith", pageEndsWith);
-		
+
 		boolean beforeMorePages = pageStartsWith > 1;
 		boolean afterMorePages = pageEndsWith < totalPage;
-		
+
 		model.addAttribute("beforeMorePages", beforeMorePages);
 		model.addAttribute("afterMorePages", afterMorePages);
 		model.addAttribute("pageBoundSize", pageBoundSize);
-		
+
 		model.addAttribute("needToShowPageBtnToFirst", page != 1);
 		model.addAttribute("needToShowPageBtnToLast", page != totalPage);
-		
 
 		return "article/list";
 	}

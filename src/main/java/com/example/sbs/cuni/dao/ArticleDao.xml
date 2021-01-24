@@ -90,27 +90,41 @@
 		ORDER BY AR.id
 		DESC
 	</select>
-	
-	<select id="getForPrintArticleRepliesFrom" resultMap="articleReply">
+
+	<select id="getForPrintArticleRepliesFrom"
+		resultMap="articleReply">
 		SELECT AR.*,
 		M.name AS extra__writer
 		FROM articleReply AS AR
 		INNER JOIN `member` AS M
 		ON AR.memberId = M.id
-		WHERE AR.articleId = #{articleId}
+		WHERE AR.articleId =
+		#{articleId}
 		AND AR.id >= #{from}
 		ORDER BY AR.id
 		DESC
 	</select>
-	
+
 	<select id="getArticlesCount" resultType="int">
 		SELECT COUNT(*) AS cnt
 		FROM article AS A
 		INNER JOIN board AS B
 		ON A.boardId = B.id
 		WHERE B.code = #{boardCode}
+		<choose>
+			<when test="searchType == 'title'">
+				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchType == 'body'">
+				AND A.body LIKE CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchType == 'titleAndBody'">
+				AND (A.title LIKE CONCAT('%',#{searchKeyword},'%') OR
+				A.body LIKE CONCAT('%',#{searchKeyword},'%'))
+			</when>
+		</choose>
 	</select>
-	
+
 	<select id="getForPrintArticles" resultMap="article">
 		SELECT
 		A.*, M.name
@@ -127,6 +141,18 @@
 		AS AL
 		ON A.id = AL.articleId
 		WHERE B.code = #{boardCode}
+		<choose>
+			<when test="searchType == 'title'">
+				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchType == 'body'">
+				AND A.body LIKE CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchType == 'titleAndBody'">
+				AND (A.title LIKE CONCAT('%',#{searchKeyword},'%') OR
+				A.body LIKE CONCAT('%',#{searchKeyword},'%'))
+			</when>
+		</choose>
 		GROUP BY A.id
 		ORDER BY A.id DESC
 		<if test="limitCount != null">
